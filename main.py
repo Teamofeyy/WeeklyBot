@@ -34,6 +34,7 @@ def get_github_issues():
                   url
                   body
                   state
+                  createdAt
                 }
               }
               fieldValues(first: 10) {
@@ -61,7 +62,26 @@ def get_github_issues():
     if "errors" in data:
         raise Exception(f"GraphQL errors: {data['errors']}")
 
-    return data["data"]["organization"]["projectV2"]["items"]["nodes"]
+    issues = []
+    for node in data["data"]["organization"]["projectV2"]["items"]["nodes"]:
+        content = node["content"]
+        field_values = node.get("fieldValues", {}).get("nodes", [])
+        status = "Не указан"
+        for field in field_values:
+            if field.get("field", {}).get("name") == "Status":
+                status = field.get("name", "Не указан")
+                break
+
+        issues.append({
+            "title": content["title"],
+            "url": content["url"],
+            "body": content.get("body", ""),
+            "state": content["state"],
+            "status": status,  # Добавляем статус в объект задачи
+            "createdAt": content["createdAt"]
+        })
+
+    return issues
 
 
 # Функция для создания клавиатуры с кнопкой
@@ -88,7 +108,6 @@ async def start(message: Message):
 # Хэндлер для получения задач по нажатию на кнопку
 @dp.callback_query()
 async def process_callback(callback_query: types.CallbackQuery):
-    # Проверяем callback_data
     if callback_query.data == "get_issues":
         await callback_query.answer("Получаю список задач из GitHub...")
 
@@ -98,8 +117,15 @@ async def process_callback(callback_query: types.CallbackQuery):
                 await callback_query.message.answer("Задачи не найдены.")
                 return
 
+            # Форматируем задачи
             formatted_issues = "\n\n".join(
-                f"**{issue['content']['title']}**\n[Ссылка на задачу]({issue['content']['url']})\nСостояние: {issue['content']['state']}"
+                f"📊Список всех задач по проекту\n"
+                f"**{issue['title']}**\n"
+                f" -Описание: {issue['body']}\n"
+                f" -Состояние: {issue['state']}\n"
+                f" -Статус: {issue['status']}\n"  # Добавляем статус в сообщение
+                f" -[Ссылка на задачу]({issue['url']})\n"
+                f"Создана: {issue['createdAt']}\n"
                 for issue in issues
             )
 
