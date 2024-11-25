@@ -4,8 +4,8 @@ from config import MY_GITHUB_TOKEN, MY_GITHUB_API_URL
 def get_github_issues():
     query = """
     query GetProjectItems {
-      organization(login: "{GITHUB_ORG}") {
-        projectV2(number: {GITHUB_PROJECT_NUMBER}) {
+      organization(login: "{MY_GITHUB_ORG}") {
+        projectV2(number: {MY_GITHUB_PROJECT_NUMBER}) {
           items(first: 20) {
             nodes {
               content {
