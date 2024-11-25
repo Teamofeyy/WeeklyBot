@@ -1,0 +1,26 @@
+name: WeeklyBot CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
+        script:
+          cd ~/WeeklyBot
+          git pull origin main
+          git status
+          source .venv/bin/activate
+          pip install -r requirements.txt
+          deactivate
+          pm2 restart tg-bot
