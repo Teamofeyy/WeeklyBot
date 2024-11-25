@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 MY_GITHUB_TOKEN = os.getenv("MY_GITHUB_TOKEN")
@@ -8,4 +11,4 @@ MY_GITHUB_PROJECT_NUMBER = int(os.getenv("MY_GITHUB_PROJECT_NUMBER", "10"))
 
 
 if not MY_GITHUB_TOKEN:
-    raise ValueError("GITHUB_TOKEN is not set in the environment.")
+    raise ValueError("MY_GITHUB_TOKEN is not set in the environment.")
