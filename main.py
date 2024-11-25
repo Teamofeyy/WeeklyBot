@@ -99,7 +99,7 @@ def create_status_keyboard():
 async def start(message: Message):
     # Отправляем сообщение с клавиатурой
     await message.answer(
-        "Привет! Я могу получать задачи из GitHub Projects.\n"
+        "Привет! Я хочу получать задачи из GitHub Projects.\n"
         "Используй кнопку ниже, чтобы получить список задач.",
         reply_markup=create_status_keyboard()
     )
