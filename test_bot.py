@@ -1,8 +1,15 @@
 import pytest
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, patch
 from aiogram.types import Message, CallbackQuery
 from handlers import start, process_callback
 
+
+@patch.dict('os.environ', {
+    'GITHUB_TOKEN': 'test-token',
+    'GITHUB_API_URL': 'https://api.github.com',
+    'GITHUB_ORG': 'test-org',
+    'GITHUB_PROJECT_NUMBER': '1',
+})
 
 @pytest.mark.asyncio
 async def test_start_command(mocker):
