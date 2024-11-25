@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/chechkout@v3
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -20,8 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m venv .venv
           source .venv/bin/activate
-          pytest --maxfail=5 --diable-warnings
+          pip install -r requirements.txt
+          pytest --maxfail=5 --disable-warnings
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
