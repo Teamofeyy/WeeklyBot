@@ -1,5 +1,5 @@
 import requests
-from config import GITHUB_TOKEN, GITHUB_API_URL
+from config import MY_GITHUB_TOKEN, MY_GITHUB_API_URL
 
 def get_github_issues():
     query = """
@@ -35,8 +35,8 @@ def get_github_issues():
       }
     }
     """
-    headers = {"Authorization": f"Bearer {GITHUB_TOKEN}"}
-    response = requests.post(GITHUB_API_URL, json={"query": query}, headers=headers)
+    headers = {"Authorization": f"Bearer {MY_GITHUB_TOKEN}"}
+    response = requests.post(MY_GITHUB_API_URL, json={"query": query}, headers=headers)
     data = response.json()
 
     if "errors" in data:

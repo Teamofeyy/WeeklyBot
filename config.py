@@ -1,10 +1,11 @@
 import os
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-GITHUB_API_URL = os.getenv("GITHUB_API_URL", "https://api.github.com")  
-GITHUB_ORG = os.getenv("GITHUB_ORG", "default-org")
-GITHUB_PROJECT_NUMBER = int(os.getenv("GITHUB_PROJECT_NUMBER", "10"))  
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+MY_GITHUB_TOKEN = os.getenv("MY_GITHUB_TOKEN")
+MY_GITHUB_API_URL = os.getenv("MY_GITHUB_API_URL", "https://api.github.com")
+MY_GITHUB_ORG = os.getenv("MY_GITHUB_ORG", "default-org")
+MY_GITHUB_PROJECT_NUMBER = int(os.getenv("MY_GITHUB_PROJECT_NUMBER", "10"))
 
 
-if not GITHUB_TOKEN:
+if not MY_GITHUB_TOKEN:
     raise ValueError("GITHUB_TOKEN is not set in the environment.")

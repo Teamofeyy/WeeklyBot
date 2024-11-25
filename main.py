@@ -1,7 +1,7 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
-from config import TELEGRAM_TOKEN, GITHUB_TOKEN, GITHUB_API_URL
+from config import TELEGRAM_TOKEN, MY_GITHUB_TOKEN, MY_GITHUB_API_URL
 from handlers import start, process_callback
 
 
